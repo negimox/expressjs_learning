@@ -235,9 +235,75 @@ This is where **Zod** comes into picture. It helps to check user input based on 
 It checks the data type of the input that the server needs and the data type of the user input.
 Using zod makes easy for the developer to perform input validation. The tricky part here is to define the schema.
 
-# AUTHENTICATION
+# HASHING
 
-From Frontend ==> Data {Email, Password etc} ==> Backend ==> Checks the data with the one stored in Database ==> Returns a Token to Frontend ==> Stores in Local Storage
+- Is one directional.
+- Given the output noone can find the input.
+
+# ENCRYPTION
+
+- Is two way.
+- A string is encrypted using a password.
+- String can be decrypted using the same password.
+
+# JSON Web Token (JWT)
+
+- Its neither hasing or encryption its techincally a digital signature.
+- Anyone can see the output given the signature.
+- Signature can be verified only using the password [stored on server etc]
+
+## AUTHENTICATION
+
+From Frontend ==> Data {Email, Password etc} ==> Backend ==> Checks the data with the one stored in Database ==> Returns a JWT to Frontend ==> Stores in Local Storage
 
 After this on every request user doesn't need to login for every authenticated action,
-From Frontend ==> Token ==> Backend ==> Checks the token is valid ==> Returns with the requested action
+From Frontend ==> JWT {Anyone can see this and anyone who gets access to this can see the data} ==> Backend ==> Checks if the token is valid ==> Returns with the requested action
+
+Syntax:
+
+```
+const jwt = require("jsonwebtoken")
+
+jwt.sign(object, jwtPassword);
+
+jwt.verify(token, jwtPassword);
+```
+
+# DATABASES
+
+Various avaiable DB:
+
+- Graph
+- Vector
+- NoSQL: MongoDB
+- SQL: Most famous for full stack dev
+
+## MongoDB
+
+- Schemaless
+
+**Getting Started:**
+
+- Create an instance using mongodb website.
+- Using mongodb compass connect to the given instance using the connection string.
+
+**Connecting with the DB using server**
+
+Mongoose allows us to connect to the DB.
+
+Example:
+
+```
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/test');
+
+const User = mongoose.model('Users', { name: String, email: String, password: String });
+
+const user = new User({
+  name: 'Vishal Singh',
+  email: 'tugrp@example.com',
+  password: '123456'
+});
+
+user.save();
+```
