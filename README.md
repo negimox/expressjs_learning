@@ -8,9 +8,15 @@ npm i express
 
 - Recommended:
   npm i nodemon
-
+  npm i dotenv [to read .env files]
 ```
 const express = require("express");
+
+// server.js
+console.log(`Your port is ${process.env.PORT}`); // undefined
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(`Your port is ${process.env.PORT}`); // 8626
 
 const app = express();
 
